@@ -52,8 +52,6 @@ export abstract class Ship implements Drownable {
     this.drown = true;
   }
 
-  public abstract getSize(): Size;
-
   public abstract getArea(): Area;
 
 }

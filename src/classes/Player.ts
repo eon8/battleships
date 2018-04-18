@@ -6,9 +6,9 @@ import {generateArea, getRandomInt} from "./Helper";
 enum CellTypes {
   Unknown,
   Miss,
-  Hit,
-  Ship,
   Margin,
+  Ship,
+  Hit,
 }
 
 export class Player {

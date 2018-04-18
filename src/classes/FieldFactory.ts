@@ -23,8 +23,8 @@ export default function <T extends Ship>(fieldSize: Size, constructorFns: Array<
 
     do {
       ship.setPosition({
-        x: getRandomInt(0, fieldSize.width - ship.getSize().width),
-        y: getRandomInt(0, fieldSize.height - ship.getSize().height)
+        x: getRandomInt(0, fieldSize.width - ship.getArea()[0].length),
+        y: getRandomInt(0, fieldSize.height - ship.getArea().length)
       });
 
       // TODO inject ship positioning inside Field class?

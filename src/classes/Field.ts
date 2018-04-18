@@ -40,12 +40,11 @@ export class Field {
     for (const ship of this.ships) {
 
       const shipPosition = ship.getPosition();
-      const shipSize = ship.getSize();
       const shipArea = ship.getArea();
 
       // TODO or we can get ship by its label id, it is more efficient
-      if (coordinates.x >= shipPosition.x && coordinates.x < shipPosition.x + shipSize.width) {
-        if (coordinates.y >= shipPosition.y && coordinates.y < shipPosition.y + shipSize.height) {
+      if (coordinates.x >= shipPosition.x && coordinates.x < shipPosition.x + shipArea[0].length) {
+        if (coordinates.y >= shipPosition.y && coordinates.y < shipPosition.y + shipArea.length) {
           // TODO move this logic inside of ship?
           if (shipArea[coordinates.y - shipPosition.y][coordinates.x - shipPosition.x] !== 0) {
             return ship;
