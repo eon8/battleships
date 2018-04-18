@@ -25,19 +25,21 @@ export class IShip extends Ship {
   }
 
   public getArea(): Area {
+    const i = this.id;
+
     switch (this.rotation) {
       case 0:
       case 180:
         return [
-          [1],
-          [1],
-          [1],
-          [1]
+          [i],
+          [i],
+          [i],
+          [i]
         ];
       case 90:
       case 270:
         return [
-          [1, 1, 1, 1]
+          [i, i, i, i]
         ];
     }
   }

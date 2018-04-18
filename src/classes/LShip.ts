@@ -24,30 +24,32 @@ export class LShip extends Ship {
   }
 
   public getArea(): Area {
+    const i = this.id;
+
     switch (this.rotation) {
       case 0:
         return [
-          [1, 0],
-          [1, 0],
-          [1, 0],
-          [1, 1]
+          [i, 0],
+          [i, 0],
+          [i, 0],
+          [i, i]
         ];
       case 90:
         return [
-          [0, 0, 0, 1],
-          [1, 1, 1, 1]
+          [0, 0, 0, i],
+          [i, i, i, i]
         ];
       case 180:
         return [
-          [1, 1],
-          [0, 1],
-          [0, 1],
-          [0, 1]
+          [i, i],
+          [0, i],
+          [0, i],
+          [0, i]
         ];
       case 270:
         return [
-          [1, 1, 1, 1],
-          [1, 0, 0, 0]
+          [i, i, i, i],
+          [i, 0, 0, 0]
         ];
     }
   }

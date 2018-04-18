@@ -20,13 +20,15 @@ export class DotShip extends Ship {
   }
 
   public getArea(): Area {
+    const i = this.id;
+
     switch (this.rotation) {
       case 0:
       case 90:
       case 180:
       case 270:
         return [
-          [1]
+          [i]
         ];
     }
   }

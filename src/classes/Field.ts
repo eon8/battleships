@@ -1,5 +1,7 @@
 import {Area, Coordinates, Ship, Size} from "./Ship";
 
+import {generateArea} from "./Helper";
+
 export class Field {
   constructor(private size: Size, private ships: Ship []) {
 
@@ -11,9 +13,7 @@ export class Field {
 
   public getArea(validate: boolean = false): Area {
 
-    const area: Area = new Array(this.size.height).fill(0).map(() => {
-      return new Array(this.size.width).fill(0);
-    });
+    const area: Area = generateArea(this.size);
 
     for (const ship of this.ships) {
 
@@ -43,9 +43,11 @@ export class Field {
       const shipSize = ship.getSize();
       const shipArea = ship.getArea();
 
+      // TODO or we can get ship by its label id, it is more efficient
       if (coordinates.x >= shipPosition.x && coordinates.x < shipPosition.x + shipSize.width) {
         if (coordinates.y >= shipPosition.y && coordinates.y < shipPosition.y + shipSize.height) {
-          if (shipArea[coordinates.y - shipPosition.y][coordinates.x - shipPosition.x] === 1) {
+          // TODO move this logic inside of ship?
+          if (shipArea[coordinates.y - shipPosition.y][coordinates.x - shipPosition.x] !== 0) {
             return ship;
           }
         }
@@ -57,16 +59,53 @@ export class Field {
 
   }
 
+  public shootAt(coordinates:Coordinates): boolean {
+    return true;
+  }
+
   public isGameOver(): boolean {
     return this.ships.every(ship => ship.isDrown());
   }
 
   public validate(): boolean {
     try {
-      this.getArea(true);
+      const area = this.getArea(true);
+
+      for (let i = 0; i < area.length; i++) {
+        for (let j = 0; j < area[i].length; j++) {
+          if (this.hasCollision(area, i, j)) {
+            return false;
+          }
+        }
+      }
+
       return true;
     } catch (e) {
       return false;
     }
+  }
+
+  // Checks cells on the right-down direction only
+  private hasCollision(area: Area, i: number, j: number): boolean {
+    if (area[i][j] === 0) {
+      return false;
+    }
+
+    const maxi = area.length - 1;
+    const maxj = area[0].length - 1;
+
+    if (j < maxj && area[i][j + 1] !== 0 && area[i][j] !== area[i][j + 1]) {
+      return true;
+    }
+
+    if (i < maxi && area[i + 1][j] !== 0 && area[i][j] !== area[i + 1][j]) {
+      return true;
+    }
+
+    if (j < maxj && i < maxi && area[i + 1][j + 1] !== 0 && area[i][j] !== area[i + 1][j + 1]) {
+      return true;
+    }
+
+    return false;
   }
 }

@@ -4,6 +4,8 @@ import {IShip} from "./IShip";
 import {LShip} from "./LShip";
 import {Rotation, Ship, Size} from "./Ship";
 
+import {getRandomInt} from "./Helper";
+
 export default function <T extends Ship>(fieldSize: Size, constructorFns: Array<typeof LShip | typeof IShip | typeof DotShip>): Field {
 // export default function <T extends Ship>(fieldSize: Size, constructorFns: Array<{ new(...args: any[]): T }>): Field {
 // export default function <T extends Ship>(fieldSize: Size, constructorFns: Array<new () => T>): Field {
@@ -13,7 +15,10 @@ export default function <T extends Ship>(fieldSize: Size, constructorFns: Array<
 
   for (const constructorFn of constructorFns) {
 
-    const ship = new constructorFn(getRandomRotation());
+    const rotation:Rotation = [0, 90, 180, 270][getRandomInt(0, 3)] as Rotation;
+
+    const ship = new constructorFn(rotation);
+
     let field: Field;
 
     do {
@@ -34,11 +39,3 @@ export default function <T extends Ship>(fieldSize: Size, constructorFns: Array<
   return new Field(fieldSize, ships);
 
 };
-
-function getRandomInt(min: number, max: number) {
-  return Math.round(Math.random() * (max - min)) + min;
-}
-
-function getRandomRotation(): Rotation {
-  return [0, 90, 180, 270][getRandomInt(0, 3)] as Rotation;
-}

@@ -1,3 +1,5 @@
+import {Counter} from "./Counter";
+
 export interface Drownable {
   isDrown(): boolean;
 
@@ -19,11 +21,14 @@ export type Area = number[][];
 export type Rotation = 0 | 90 | 180 | 270;
 
 export abstract class Ship implements Drownable {
+  protected id: number;
+
   private drown = false;
   private x: number;
   private y: number;
 
   protected constructor(protected rotation: Rotation) {
+    this.id = Counter.getInstance('ship').tick();
   }
 
   public getRotation(rotation: Rotation) {
