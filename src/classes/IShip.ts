@@ -1,4 +1,4 @@
-import {Rotation, Ship, Size} from "./Ship";
+import {Area, Rotation, Ship, Size} from "./Ship";
 
 export class IShip extends Ship {
   // TODO simplify because it is duplication from parent
@@ -6,6 +6,7 @@ export class IShip extends Ship {
     super(rotation);
   }
 
+  // TODO remove and use getArea dimensions?
   public getSize(): Size {
     switch (this.rotation) {
       case 0:
@@ -20,6 +21,24 @@ export class IShip extends Ship {
           width: 4,
           height: 1
         };
+    }
+  }
+
+  public getArea(): Area {
+    switch (this.rotation) {
+      case 0:
+      case 180:
+        return [
+          [1],
+          [1],
+          [1],
+          [1]
+        ];
+      case 90:
+      case 270:
+        return [
+          [1, 1, 1, 1]
+        ];
     }
   }
 }

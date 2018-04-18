@@ -14,6 +14,8 @@ export interface Coordinates {
   y: number;
 }
 
+export type Area = number[][];
+
 export type Rotation = 0 | 90 | 180 | 270;
 
 export abstract class Ship implements Drownable {
@@ -46,5 +48,7 @@ export abstract class Ship implements Drownable {
   }
 
   public abstract getSize(): Size;
+
+  public abstract getArea(): Area;
 
 }

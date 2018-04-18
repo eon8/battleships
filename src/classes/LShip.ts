@@ -1,4 +1,4 @@
-import {Rotation, Ship, Size} from "./Ship";
+import {Area, Rotation, Ship, Size} from "./Ship";
 
 export class LShip extends Ship {
   // TODO simplify because it is duplication from parent
@@ -20,6 +20,35 @@ export class LShip extends Ship {
           width: 4,
           height: 2
         };
+    }
+  }
+
+  public getArea(): Area {
+    switch (this.rotation) {
+      case 0:
+        return [
+          [1, 0],
+          [1, 0],
+          [1, 0],
+          [1, 1]
+        ];
+      case 90:
+        return [
+          [0, 0, 0, 1],
+          [1, 1, 1, 1]
+        ];
+      case 180:
+        return [
+          [1, 1],
+          [0, 1],
+          [0, 1],
+          [0, 1]
+        ];
+      case 270:
+        return [
+          [1, 1, 1, 1],
+          [1, 0, 0, 0]
+        ];
     }
   }
 }
