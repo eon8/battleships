@@ -1,10 +1,5 @@
-import {Counter} from "./Counter";
-
-export interface Drownable {
-  isDrown(): boolean;
-
-  sink(): void;
-}
+import {Area} from "../Area";
+import {Counter} from "../Counter";
 
 export interface Size {
   width: number;
@@ -16,26 +11,24 @@ export interface Coordinates {
   y: number;
 }
 
-export type Area = number[][];
-
 export type Rotation = 0 | 90 | 180 | 270;
 
-export abstract class Ship implements Drownable {
+export abstract class BaseShip {
   protected id: number;
 
   private drown = false;
   private x: number;
   private y: number;
 
-  protected constructor(protected rotation: Rotation) {
+  public constructor(protected rotation: Rotation) {
     this.id = Counter.getInstance('ship').tick();
   }
 
-  public getRotation(rotation: Rotation) {
-    return this.rotation;
+  public identify(id: number): boolean {
+    return id === this.id;
   }
 
-  public setPosition({x, y}: Coordinates) {
+  public setPosition(x: number, y: number) {
     this.x = x;
     this.y = y;
   }
@@ -52,6 +45,10 @@ export abstract class Ship implements Drownable {
     this.drown = true;
   }
 
-  public abstract getArea(): Area;
+  public getArea(): Area {
+    return new Area(this.getShape());
+  }
+
+  public abstract getShape(): number[][];
 
 }

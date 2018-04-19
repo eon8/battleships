@@ -1,12 +1,8 @@
-import {Area, Rotation, Ship} from "./Ship";
+import {BaseShip} from "./BaseShip";
 
-export class IShip extends Ship {
-  // TODO simplify because it is duplication from parent
-  constructor(protected rotation: Rotation) {
-    super(rotation);
-  }
+export class IShip extends BaseShip {
 
-  public getArea(): Area {
+  public getShape(): number[][] {
     const i = this.id;
 
     switch (this.rotation) {

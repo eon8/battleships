@@ -1,5 +1,6 @@
+import {Area} from "./Area";
 import {Field} from "./Field";
-import {Area, Coordinates, Size} from "./Ship";
+import {Coordinates, Size} from "./ship/BaseShip";
 
 import {generateArea, getRandomInt} from "./Helper";
 
@@ -20,29 +21,24 @@ export class Player {
     this.area = generateArea(this.size);
   }
 
-  public getArea(): Area {
-    return this.area;
-  }
-
   public makeAMove(): any {
     const coordinates = this.generateRandomCoordinates();
     const ship = this.field.getShipFromCoordinates(coordinates);
     if (ship) {
       const shipArea = ship.getArea();
       const shipPosition = ship.getPosition();
-      for (let i = 0; i < shipArea.length; i++) {
-        for (let j = 0; j < shipArea[i].length; j++) {
-          // TODO check inside ship?
-          if (shipArea[i][j] !== 0) {
-            this.markHit(shipPosition.y + i, shipPosition.x + j)
-          }
+
+      shipArea.traverse((value: number, x: number, y: number) => {
+        if (value !== 0) {
+          this.markHit(shipPosition.y + y, shipPosition.x + x);
         }
-      }
+      });
+
       ship.sink();
-      this.area[coordinates.y][coordinates.x] = CellTypes.Hit;
+      this.area.set(coordinates.x, coordinates.y, CellTypes.Hit);
       return {...coordinates, hit: true};
     } else {
-      this.area[coordinates.y][coordinates.x] = CellTypes.Miss;
+      this.area.set(coordinates.x, coordinates.y, CellTypes.Miss);
       return {...coordinates, hit: false};
     }
   }
@@ -62,7 +58,7 @@ export class Player {
   private markCell(i: number, j: number, isShip: boolean = false): void {
     if (i >= 0 && i < this.size.height && j >= 0 && j < this.size.width) {
       // TODO simplify
-      this.area[i][j] = isShip ? CellTypes.Ship : (this.area[i][j] === CellTypes.Unknown ? CellTypes.Margin : this.area[i][j]);
+      this.area.set(j,i, isShip ? CellTypes.Ship : (this.area.get(j,i) === CellTypes.Unknown ? CellTypes.Margin : this.area.get(j,i)));
     }
   }
 
@@ -73,8 +69,7 @@ export class Player {
         x: getRandomInt(0, this.size.width - 1),
         y: getRandomInt(0, this.size.height - 1)
       }
-      // TODO area method to get value from x y
-    } while (this.area[coordinates.y][coordinates.x] !== CellTypes.Unknown);
+    } while (this.area.get(coordinates.x, coordinates.y) !== CellTypes.Unknown);
     return coordinates;
   }
 }
