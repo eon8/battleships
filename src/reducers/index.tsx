@@ -1,16 +1,27 @@
-import {GameAction, MAKE_A_MOVE} from '../actions';
+import {GameAction, MAKE_A_MOVE, START_GAME} from '../actions';
 
-import {START_GAME} from '../actions';
-import FieldFactory from "../core/FieldFactory";
-import {generateMatrix} from "../core/Helper";
+import FieldFactory from '../core/FieldFactory';
+import {generateMatrix} from '../core/Helper';
 
-import {Area} from "../core/Area";
-import {Field} from "../core/Field";
-import {PlayerArea, PlayerCellTypes} from "../core/PlayerArea";
+import {Area} from '../core/Area';
+import {Field} from '../core/Field';
+import {Player, PlayerCellTypes} from '../core/Player';
+import {DotShip} from '../core/ship/DotShip';
+import {IShip} from '../core/ship/IShip';
+import {LShip} from '../core/ship/LShip';
+
+export type AnyShip = typeof LShip | typeof IShip | typeof DotShip;
+
+export interface ShipInfo {
+  id: number;
+  x: number;
+  y: number;
+  shape: number[][];
+}
 
 export interface StoreState {
   field: number[][];
-  ships: any[];
+  ships: ShipInfo[];
   playerField: number[][];
   numberOfMoves: number;
   isGameEnded: boolean;
@@ -26,18 +37,26 @@ const initialState: StoreState = {
 
 export function reducer(state: StoreState = initialState, action: GameAction): StoreState {
   switch (action.type) {
+
     case START_GAME:
+
       const gameField: Field = FieldFactory(action.payload.ships, action.payload.options);
+      const field = gameField.getMatrix();
+      const ships = gameField.getShips();
+
       return {
         ...state,
-        field: gameField.getArea(),
-        playerField: generateMatrix(gameField.getArea()[0].length, gameField.getArea().length),
+        field,
+        ships,
+        playerField: generateMatrix(field[0].length, field.length),
         numberOfMoves: 0,
-        isGameEnded: false,
-        ships: gameField.getShips()
+        isGameEnded: false
       };
+
     case MAKE_A_MOVE:
+
       const playerField = shootAt(state.playerField, state.field, state.ships, action.payload.x, action.payload.y);
+
       return {
         ...state,
         playerField,
@@ -48,28 +67,36 @@ export function reducer(state: StoreState = initialState, action: GameAction): S
           0) === state.ships.length,
         numberOfMoves: state.numberOfMoves + 1
       };
+
   }
   return state;
 }
 
-function shootAt(area: number[][], field: number[][], ships: any[], x: number, y: number): number [][] {
-  const playerArea = new PlayerArea(area);
+function shootAt(playerArea: number[][], area: number[][], ships: ShipInfo[], x: number, y: number): number [][] {
+  const playerField:Player = new Player(playerArea);
+  const field:Area = new Area(area);
 
-  if (field[y][x]) {
-    const ship = ships.find((s: any) => s.id === field[y][x]);
+  if (field.get(x,y)) {
+    const ship = ships.find((shipInfo: ShipInfo) => shipInfo.id === field.get(x,y));
 
-    new Area(ship.area).traverse((value: number, sx: number, sy: number) => {
+    if (!ship) {
+      throw new Error('No ship with id ' + field.get(x,y) + ' was found');
+    }
+
+    new Area(ship.shape).traverse((value: number, sx: number, sy: number) => {
       if (value !== Area.EMPTY) {
-        playerArea.markHit(ship.y + sy, ship.x + sx);
+        playerField.markHit(ship.y + sy, ship.x + sx);
       }
     });
 
-    playerArea.set(x, y, PlayerCellTypes.Hit);
+    playerField.set(x, y, PlayerCellTypes.Hit);
 
   } else {
-    playerArea.set(x, y, PlayerCellTypes.Miss);
+
+    playerField.set(x, y, PlayerCellTypes.Miss);
+
   }
 
-  return playerArea.export();
+  return playerField.toMatrix();
 
 }

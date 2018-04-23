@@ -1,5 +1,5 @@
-import {Area} from "../Area";
-import {Counter} from "../Counter";
+import {Area} from '../Area';
+import {Counter} from '../Counter';
 
 export type Rotation = 0 | 90 | 180 | 270;
 

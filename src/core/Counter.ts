@@ -18,7 +18,7 @@ export class Counter {
     this.value = 0;
   }
 
-  public tick() {
+  public tick(): number {
     return ++this.value;
   }
 

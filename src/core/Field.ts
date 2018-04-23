@@ -1,6 +1,7 @@
-import {Area} from "./Area";
-import {generateMatrix} from "./Helper";
-import {BaseShip} from "./ship/BaseShip";
+import {ShipInfo} from '../reducers';
+import {Area} from './Area';
+import {generateMatrix} from './Helper';
+import {BaseShip} from './ship/BaseShip';
 
 export class Field {
   private readonly area: Area;
@@ -29,17 +30,16 @@ export class Field {
 
   }
 
-  public getArea(): number[][] {
-    return this.area.export();
+  public getMatrix(): number[][] {
+    return this.area.toMatrix();
   }
 
-  public getShips(): any[] {
+  public getShips(): ShipInfo[] {
     return this.ships.map(ship => ({
       id: ship.getId(),
       x: ship.getPosition().x,
       y: ship.getPosition().y,
-      area: ship.getArea().export(),
-      isDrown: false
+      shape: ship.getShape()
     }));
   }
 }

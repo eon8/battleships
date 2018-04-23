@@ -1,15 +1,9 @@
-import {Field} from "./Field";
-import {BaseShip, Rotation} from "./ship/BaseShip";
-import {DotShip} from "./ship/DotShip";
-import {IShip} from "./ship/IShip";
-import {LShip} from "./ship/LShip";
+import {AnyShip} from '../reducers';
+import {Field} from './Field';
+import {getRandomInt} from './Helper';
+import {BaseShip, Rotation} from './ship/BaseShip';
 
-import {getRandomInt} from "./Helper";
-
-export default function FieldFactory<T extends BaseShip>(constructorFns: Array<typeof LShip | typeof IShip | typeof DotShip>, {width = 10, height = 10} = {}): Field {
-// export default function <T extends BaseShip>(fieldSize: Size, constructorFns: Array<{ new(...args: any[]): T }>): Field {
-// export default function <T extends BaseShip>(fieldSize: Size, constructorFns: Array<new () => T>): Field {
-// export default function (fieldSize: Size, constructorFns: Array<new () => BaseShip>): Field {
+export default function FieldFactory<T extends BaseShip>(constructorFns: AnyShip[], {width = 10, height = 10} = {}): Field {
 
   const ships: BaseShip[] = [];
 

@@ -2,23 +2,23 @@ import * as React from 'react';
 
 import './App.css';
 
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
 
-import Battlefield from "./Battlefield";
+import Battlefield from './Battlefield';
 
 import * as actions from '../actions';
-import {StoreState} from "../reducers";
+import {AnyShip, StoreState} from '../reducers';
 
-import {PlayerArea} from "../core/PlayerArea";
-import {DotShip} from "../core/ship/DotShip";
-import {IShip} from "../core/ship/IShip";
-import {LShip} from "../core/ship/LShip";
+import {Player} from '../core/Player';
+import {DotShip} from '../core/ship/DotShip';
+import {IShip} from '../core/ship/IShip';
+import {LShip} from '../core/ship/LShip';
 
 export interface Props {
   playerField: number[][];
   numberOfMoves: number;
   isGameEnded: boolean;
-  startGame?: (ships: any[], options: {}) => void;
+  startGame?: (ships: AnyShip[], options: {}) => void;
   makeAMove?: (x: number, y: number) => void;
 }
 
@@ -58,7 +58,7 @@ class App extends React.Component<Props> {
     this.props.startGame!([LShip, IShip, DotShip, DotShip], {width: 10, height: 10});
 
     this.makeAMove = () => {
-      const {x, y} = (new PlayerArea(this.props.playerField)).randomEmptyCell();
+      const {x, y} = (new Player(this.props.playerField)).randomEmptyCell();
 
       this.props.makeAMove!(x, y);
     };
@@ -79,9 +79,12 @@ class App extends React.Component<Props> {
   }
 }
 
-export default connect<Props>(({numberOfMoves, isGameEnded, playerField}: StoreState): Props => {
-  return {numberOfMoves, isGameEnded, playerField};
-}, {
-  startGame: (ships: any[], options: {}) => actions.startGame(ships, options),
-  makeAMove: (x: number, y: number) => actions.makeAMove(x, y)
-})(App);
+export default connect<Props>(
+  ({playerField, numberOfMoves, isGameEnded}: StoreState): Props => {
+    return {playerField, numberOfMoves, isGameEnded};
+  },
+  {
+    startGame: (ships: AnyShip[], options: {}) => actions.startGame(ships, options),
+    makeAMove: (x: number, y: number) => actions.makeAMove(x, y)
+  }
+)(App);

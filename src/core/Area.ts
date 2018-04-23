@@ -58,7 +58,7 @@ export class Area {
     return false;
   }
 
-  public export(): number[][] {
+  public toMatrix(): number[][] {
     return JSON.parse(JSON.stringify(this.area));
   }
 

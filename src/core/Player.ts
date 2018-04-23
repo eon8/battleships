@@ -1,6 +1,5 @@
-import {getRandomInt} from "./Helper";
-
-import {Area} from "./Area";
+import {Area} from './Area';
+import {getRandomInt} from './Helper';
 
 export enum PlayerCellTypes {
   Unknown,
@@ -10,7 +9,7 @@ export enum PlayerCellTypes {
   Hit,
 }
 
-export class PlayerArea extends Area {
+export class Player extends Area {
   public randomEmptyCell(): { x: number, y: number } {
     let x;
     let y;
@@ -35,7 +34,6 @@ export class PlayerArea extends Area {
 
   private markCell(i: number, j: number, isShip: boolean = false): void {
     if (i >= 0 && i < this.getHeight() && j >= 0 && j < this.getWidth()) {
-      // TODO simplify
       this.set(j, i, isShip ? PlayerCellTypes.Ship : (this.get(j, i) !== PlayerCellTypes.Ship ? PlayerCellTypes.Margin : PlayerCellTypes.Ship));
     }
   }

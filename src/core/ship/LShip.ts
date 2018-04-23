@@ -1,4 +1,4 @@
-import {BaseShip} from "./BaseShip";
+import {BaseShip} from './BaseShip';
 
 export class LShip extends BaseShip {
 
