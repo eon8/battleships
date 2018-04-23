@@ -3,16 +3,16 @@ import * as React from 'react';
 import './Battlefield.css';
 
 export interface Props {
-  playerField: number[][];
+  field: number[][];
 }
 
-function Battlefield({playerField}: Props) {
+function Battlefield({field}: Props) {
   return (
     <div className="field">
       {
-        playerField.map((row, index) => <div className="fieldRow" key={index}>
+        field.map((row, rowIndex) => <div className="fieldRow" key={rowIndex}>
           {
-            row.map((cell, index) => <div className="fieldCell" key={index}>
+            row.map((cell, cellIndex) => <div className={`fieldCell fieldCell--${cell}`} key={cellIndex}>
               {cell}
             </div>)
           }

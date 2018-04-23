@@ -1,13 +1,43 @@
-.hello {
-  text-align: center;
-  margin: 20px;
-  font-size: 48px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.field {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #000;
+  padding: 1px;
 }
 
-.hello button {
-  margin-left: 25px;
-  margin-right: 25px;
-  font-size: 40px;
-  min-width: 50px;
+.fieldRow {
+  display: flex;
+}
+
+.fieldCell {
+  margin: 1px;
+  flex: 1 0 0;
+  color: transparent;
+  font-size: 0;
+}
+
+.fieldCell::after {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
+}
+
+.fieldCell--0 {
+  background: #fff;
+}
+
+.fieldCell--1 {
+  background: #b2b2b2;
+}
+
+.fieldCell--2 {
+  background: #1d20e7;
+}
+
+.fieldCell--3 {
+  background: #1de705;
+}
+
+.fieldCell--4 {
+  background: #e7240f;
 }
