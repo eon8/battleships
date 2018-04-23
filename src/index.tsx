@@ -3,24 +3,14 @@ import * as ReactDOM from 'react-dom';
 
 import './index.css';
 
+import {Provider} from "react-redux";
+import {createStore} from "redux";
+import App from "./conatiners/App";
+import {field} from "./reducers";
+
 import registerServiceWorker from './registerServiceWorker';
 
-import App from './conatiners/App';
-
-import {Area} from "./core/Area";
-
-import {Provider} from 'react-redux';
-
-import {createStore} from 'redux';
-
-import {enthusiasm} from './reducers';
-
-import {StoreState} from './actions/types';
-
-const store = createStore<StoreState>(enthusiasm, {
-  playerField: new Area([[]]),
-  numberOfMoves: 0,
-});
+const store = createStore(field);
 
 ReactDOM.render(
   <Provider store={store}>
@@ -28,4 +18,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root') as HTMLElement
 );
+
 registerServiceWorker();
