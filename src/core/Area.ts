@@ -40,15 +40,19 @@ export class Area {
         const maxi = this.area.length - 1;
         const maxj = this.area[0].length - 1;
 
+        if (j < maxj && i > 0 && this.area[i - 1][j + 1] !== Area.EMPTY && this.area[i][j] !== this.area[i - 1][j + 1]) {
+          return true;
+        }
+
         if (j < maxj && this.area[i][j + 1] !== Area.EMPTY && this.area[i][j] !== this.area[i][j + 1]) {
           return true;
         }
 
-        if (i < maxi && this.area[i + 1][j] !== Area.EMPTY && this.area[i][j] !== this.area[i + 1][j]) {
+        if (j < maxj && i < maxi && this.area[i + 1][j + 1] !== Area.EMPTY && this.area[i][j] !== this.area[i + 1][j + 1]) {
           return true;
         }
 
-        if (j < maxj && i < maxi && this.area[i + 1][j + 1] !== Area.EMPTY && this.area[i][j] !== this.area[i + 1][j + 1]) {
+        if (i < maxi && this.area[i + 1][j] !== Area.EMPTY && this.area[i][j] !== this.area[i + 1][j]) {
           return true;
         }
 
