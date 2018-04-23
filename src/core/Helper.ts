@@ -1,14 +1,9 @@
-import {Area} from "./Area";
-import {Size} from "./ship/BaseShip";
-
 export function getRandomInt(min: number, max: number) {
   return Math.round(Math.random() * (max - min)) + min;
 }
 
-export function generateArea(size: Size): Area {
-  return new Area(
-    new Array(size.height).fill(0).map(() => {
-      return new Array(size.width).fill(0);
-    })
-  );
+export function generateMatrix(width: number, height: number, fill: number = 0): number[][] {
+  return new Array(height).fill(fill).map(() => {
+    return new Array(width).fill(fill);
+  });
 }

@@ -49,6 +49,10 @@ export abstract class BaseShip {
     return new Area(this.getShape());
   }
 
+  public getId(): number {
+    return this.id;
+  }
+
   public abstract getShape(): number[][];
 
 }

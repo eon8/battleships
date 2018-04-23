@@ -39,15 +39,13 @@ class App extends React.Component<Props> {
 
         <h2>
           {this.props.isGameEnded ? (
-            `Congratulations, you've destroyed all ships.`
+            `Congratulations, you've destroyed all ships in ${this.props.numberOfMoves} moves!`
           ) : (
-            `Press any key to shoot. (${this.props.numberOfMoves})`
+            `Press any key to shoot (${this.props.numberOfMoves})`
           )}
         </h2>
 
-        <section className="App-body">
-          <Battlefield />
-        </section>
+        <Battlefield />
 
         <button onClick={this.startGame}>Start game</button>
       </div>

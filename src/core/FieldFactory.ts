@@ -1,12 +1,12 @@
 import {Field} from "./Field";
-import {BaseShip, Rotation, Size} from "./ship/BaseShip";
+import {BaseShip, Rotation} from "./ship/BaseShip";
 import {DotShip} from "./ship/DotShip";
 import {IShip} from "./ship/IShip";
 import {LShip} from "./ship/LShip";
 
 import {getRandomInt} from "./Helper";
 
-export default function FieldFactory<T extends BaseShip>(fieldSize: Size, constructorFns: Array<typeof LShip | typeof IShip | typeof DotShip>): Field {
+export default function FieldFactory<T extends BaseShip>(constructorFns: Array<typeof LShip | typeof IShip | typeof DotShip>, {width = 10, height = 10} = {}): Field {
 // export default function <T extends BaseShip>(fieldSize: Size, constructorFns: Array<{ new(...args: any[]): T }>): Field {
 // export default function <T extends BaseShip>(fieldSize: Size, constructorFns: Array<new () => T>): Field {
 // export default function (fieldSize: Size, constructorFns: Array<new () => BaseShip>): Field {
@@ -25,13 +25,13 @@ export default function FieldFactory<T extends BaseShip>(fieldSize: Size, constr
       );
 
       ship.setPosition(
-        getRandomInt(0, fieldSize.width - ship.getArea().getWidth()),
-        getRandomInt(0, fieldSize.height - ship.getArea().getHeight())
+        getRandomInt(0, width - ship.getArea().getWidth()),
+        getRandomInt(0, height - ship.getArea().getHeight())
       );
 
       try {
 
-        field = new Field(fieldSize, [...ships, ship]);
+        field = new Field({width, height}, [...ships, ship]);
 
       } catch (e) {
 
@@ -45,6 +45,6 @@ export default function FieldFactory<T extends BaseShip>(fieldSize: Size, constr
 
   }
 
-  return new Field(fieldSize, ships);
+  return new Field({width, height}, ships);
 
 };

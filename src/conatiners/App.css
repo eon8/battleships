@@ -4,16 +4,10 @@
 
 .App-header {
   background: #222;
-  height: 150px;
-  padding: 20px;
+  padding: 40px;
   color: white;
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 3em;
 }
-
-.App-body {
-  padding: 0 100px;
-}
-
