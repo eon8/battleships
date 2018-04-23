@@ -73,19 +73,19 @@ export function reducer(state: StoreState = initialState, action: GameAction): S
 }
 
 function shootAt(playerArea: number[][], area: number[][], ships: ShipInfo[], x: number, y: number): number [][] {
-  const playerField:Player = new Player(playerArea);
-  const field:Area = new Area(area);
+  const playerField: Player = new Player(playerArea);
+  const field: Area = new Area(area);
 
-  if (field.get(x,y)) {
-    const ship = ships.find((shipInfo: ShipInfo) => shipInfo.id === field.get(x,y));
+  if (field.get(x, y)) {
+    const ship = ships.find((shipInfo: ShipInfo) => shipInfo.id === field.get(x, y));
 
     if (!ship) {
-      throw new Error('No ship with id ' + field.get(x,y) + ' was found');
+      throw new Error('No ship with id ' + field.get(x, y) + ' was found');
     }
 
     new Area(ship.shape).traverse((value: number, sx: number, sy: number) => {
       if (value !== Area.EMPTY) {
-        playerField.markHit(ship.y + sy, ship.x + sx);
+        playerField.markHit(ship.x + sx, ship.y + sy);
       }
     });
 

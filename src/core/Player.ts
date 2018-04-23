@@ -20,21 +20,21 @@ export class Player extends Area {
     return {x, y};
   }
 
-  public markHit(i: number, j: number): void {
-    this.markCell(i - 1, j - 1);
-    this.markCell(i - 1, j);
-    this.markCell(i - 1, j + 1);
-    this.markCell(i, j - 1);
-    this.markCell(i, j, true);
-    this.markCell(i, j + 1);
-    this.markCell(i + 1, j - 1);
-    this.markCell(i + 1, j);
-    this.markCell(i + 1, j + 1);
+  public markHit(x: number, y: number): void {
+    this.markCell(x - 1, y - 1);
+    this.markCell(x - 1, y);
+    this.markCell(x - 1, y + 1);
+    this.markCell(x, y - 1);
+    this.markCell(x, y, true);
+    this.markCell(x, y + 1);
+    this.markCell(x + 1, y - 1);
+    this.markCell(x + 1, y);
+    this.markCell(x + 1, y + 1);
   }
 
-  private markCell(i: number, j: number, isShip: boolean = false): void {
-    if (i >= 0 && i < this.getHeight() && j >= 0 && j < this.getWidth()) {
-      this.set(j, i, isShip ? PlayerCellTypes.Ship : (this.get(j, i) !== PlayerCellTypes.Ship ? PlayerCellTypes.Margin : PlayerCellTypes.Ship));
+  private markCell(x: number, y: number, isShip: boolean = false): void {
+    if (x >= 0 && x < this.getWidth() && y >= 0 && y < this.getHeight()) {
+      this.set(x, y, isShip ? PlayerCellTypes.Ship : (this.get(x, y) !== PlayerCellTypes.Ship ? PlayerCellTypes.Margin : PlayerCellTypes.Ship));
     }
   }
 }
